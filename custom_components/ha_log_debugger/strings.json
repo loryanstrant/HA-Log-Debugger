@@ -1,0 +1,60 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Log Debugger Setup",
+        "description": "Configure the log debugger to monitor your Home Assistant logs for errors and warnings.",
+        "data": {
+          "log_level": "Minimum log level to monitor",
+          "auto_analyze": "Automatically analyze logs with AI",
+          "max_ai_calls_per_hour": "Maximum AI analyses per hour"
+        }
+      }
+    },
+    "error": {
+      "invalid_log_level": "Invalid log level selected"
+    },
+    "abort": {
+      "already_configured": "Log Debugger is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Log Debugger Options",
+        "description": "Configure how the log debugger monitors and analyzes your logs.",
+        "data": {
+          "log_level": "Minimum log level to monitor",
+          "auto_analyze": "Automatically analyze logs with AI",
+          "max_ai_calls_per_hour": "Maximum AI analyses per hour",
+          "scan_interval": "Log scan interval (seconds)",
+          "excluded_integrations": "Excluded integrations (comma-separated)"
+        }
+      }
+    }
+  },
+  "services": {
+    "analyze_log_entry": {
+      "name": "Analyze Log Entry",
+      "description": "Analyze a specific log entry with AI to get detailed explanations and solutions.",
+      "fields": {
+        "entry_id": {
+          "name": "Entry ID",
+          "description": "The ID of the log entry to analyze"
+        },
+        "use_ai": {
+          "name": "Use AI",
+          "description": "Whether to use AI for analysis"
+        }
+      }
+    },
+    "clear_analyzed_logs": {
+      "name": "Clear Analyzed Logs",
+      "description": "Clear the history of analyzed log entries."
+    },
+    "scan_logs_now": {
+      "name": "Scan Logs Now",
+      "description": "Manually trigger an immediate log scan."
+    }
+  }
+}

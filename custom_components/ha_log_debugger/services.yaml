@@ -1,0 +1,26 @@
+analyze_log_entry:
+  name: Analyze Log Entry
+  description: Analyze a specific log entry with AI to get detailed explanations and solutions.
+  fields:
+    entry_id:
+      name: Entry ID
+      description: The ID of the log entry to analyze
+      required: true
+      example: "1696723200.0_1234"
+      selector:
+        text:
+    use_ai:
+      name: Use AI
+      description: Whether to use AI for analysis (counts toward hourly limit)
+      required: false
+      default: true
+      selector:
+        boolean:
+
+clear_analyzed_logs:
+  name: Clear Analyzed Logs
+  description: Clear the history of analyzed log entries and reset counters.
+
+scan_logs_now:
+  name: Scan Logs Now
+  description: Manually trigger an immediate log scan instead of waiting for the next scheduled scan.

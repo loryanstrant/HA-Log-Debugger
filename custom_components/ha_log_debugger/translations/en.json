@@ -1,0 +1,96 @@
+{
+  "title": "Log Debugger for Home Assistant",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Log Debugger Setup",
+        "description": "Configure the log debugger to monitor your Home Assistant logs for errors and warnings. The integration will scan your logs and provide AI-powered explanations for any issues found.",
+        "data": {
+          "log_level": "Minimum log level to monitor (WARNING, ERROR, or CRITICAL)",
+          "auto_analyze": "Automatically analyze new errors with AI (may incur costs)",
+          "max_ai_calls_per_hour": "Maximum number of AI analysis calls per hour (helps control costs)"
+        },
+        "data_description": {
+          "log_level": "Choose which severity of log messages to monitor",
+          "auto_analyze": "When enabled, errors are automatically sent to AI for analysis",
+          "max_ai_calls_per_hour": "Set to 0 to disable AI analysis, or a higher number for more frequent analysis"
+        }
+      }
+    },
+    "error": {
+      "invalid_log_level": "The selected log level is invalid. Please choose WARNING, ERROR, or CRITICAL.",
+      "already_configured": "This integration is already configured. You can only have one instance."
+    },
+    "abort": {
+      "already_configured": "Log Debugger is already configured. Only one instance is allowed."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure Log Debugger",
+        "description": "Adjust how the log debugger monitors and analyzes your Home Assistant logs.",
+        "data": {
+          "log_level": "Minimum log level to monitor",
+          "auto_analyze": "Automatically analyze logs with AI",
+          "max_ai_calls_per_hour": "Maximum AI analyses per hour",
+          "scan_interval": "Log scan interval (seconds)",
+          "excluded_integrations": "Excluded integrations (comma-separated)"
+        },
+        "data_description": {
+          "log_level": "Only monitor logs at or above this severity level",
+          "auto_analyze": "Enable automatic AI analysis for new errors (uses AI quota)",
+          "max_ai_calls_per_hour": "Limit AI calls to control costs (0 = disabled)",
+          "scan_interval": "How frequently to check the log file (10-300 seconds)",
+          "excluded_integrations": "List integrations to ignore, e.g., 'zha, mqtt, esphome'"
+        }
+      }
+    }
+  },
+  "services": {
+    "analyze_log_entry": {
+      "name": "Analyze Log Entry",
+      "description": "Analyze a specific log entry with AI to get detailed explanations and suggested solutions.",
+      "fields": {
+        "entry_id": {
+          "name": "Entry ID",
+          "description": "The unique identifier of the log entry to analyze (found in sensor attributes)"
+        },
+        "use_ai": {
+          "name": "Use AI",
+          "description": "Whether to use AI for analysis (counts toward your hourly limit)"
+        }
+      }
+    },
+    "clear_analyzed_logs": {
+      "name": "Clear Analyzed Logs",
+      "description": "Clear the history of analyzed log entries and reset all counters to zero."
+    },
+    "scan_logs_now": {
+      "name": "Scan Logs Now",
+      "description": "Manually trigger an immediate scan of the log file instead of waiting for the next scheduled scan."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total_log_entries": {
+        "name": "Total Log Entries"
+      },
+      "warnings": {
+        "name": "Warnings"
+      },
+      "errors": {
+        "name": "Errors"
+      },
+      "critical_errors": {
+        "name": "Critical Errors"
+      },
+      "last_error": {
+        "name": "Last Error"
+      },
+      "ai_analysis_remaining": {
+        "name": "AI Analysis Remaining"
+      }
+    }
+  }
+}

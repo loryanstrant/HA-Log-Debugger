@@ -1,0 +1,8 @@
+{
+  "name": "Log Debugger for Home Assistant",
+  "content_in_root": false,
+  "filename": "ha_log_debugger",
+  "homeassistant": "2023.8.0",
+  "render_readme": true,
+  "zip_release": true
+}
