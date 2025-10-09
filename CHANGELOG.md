@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial full scan on integration startup
 - Added scan_interval configuration to initial setup flow
 - Improved logging with detailed scan progress messages
+- Added `MAX_LOG_LINES_FULL_SCAN` constant for better maintainability
 
 ### Fixed
 - Fixed OptionsFlowHandler initialization to properly accept config_entry parameter
@@ -24,13 +25,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Manual scan service now performs full log file scan by default
 - Periodic background scanning only reads new entries for efficiency
 - Improved service responsiveness and reliability
+- Replaced magic number `2` with `os.SEEK_END` constant for better readability
+- Replaced hard-coded 5000 with named constant `MAX_LOG_LINES_FULL_SCAN`
 
 ### Technical
 - Refactored `async_scan_logs()` to accept `full_scan` parameter
 - Added `_read_full_log()` method for complete log file scanning
 - Updated `__init__.py` to use configurable scan interval from config entry
-
-## [0.1.1-alpha] - 2025-10-07
+- Improved code quality following GitHub Copilot suggestions
 
 ### Fixed
 - Removed deprecated explicit config_entry assignment in OptionsFlowHandler to fix Home Assistant 2025.12 deprecation warning

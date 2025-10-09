@@ -30,6 +30,7 @@ from .const import (
     CONF_EXCLUDED_INTEGRATIONS,
     CONF_LOG_LEVEL,
     CONF_MAX_AI_CALLS_PER_HOUR,
+    MAX_LOG_LINES_FULL_SCAN,
 )
 from .parsers import LogParser
 
@@ -212,16 +213,16 @@ class LogMonitor:
     def _read_full_log(self) -> list[str]:
         """Read entire log file (runs in executor).
         
-        Reads the last 5000 lines or the entire file if smaller.
+        Reads the last MAX_LOG_LINES_FULL_SCAN lines or the entire file if smaller.
         Updates last_position to end of file.
         """
         with open(self.log_file_path, "r", encoding="utf-8", errors="ignore") as f:
             # Read all lines
             all_lines = f.readlines()
-            # Take last 5000 lines to avoid overwhelming the system
-            lines_to_process = all_lines[-5000:] if len(all_lines) > 5000 else all_lines
+            # Take last MAX_LOG_LINES_FULL_SCAN lines to avoid overwhelming the system
+            lines_to_process = all_lines[-MAX_LOG_LINES_FULL_SCAN:] if len(all_lines) > MAX_LOG_LINES_FULL_SCAN else all_lines
             # Update position to end of file
-            f.seek(0, 2)  # Seek to end
+            f.seek(0, os.SEEK_END)  # Seek to end
             self.last_position = f.tell()
         return lines_to_process
 
