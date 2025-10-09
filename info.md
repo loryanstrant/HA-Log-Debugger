@@ -2,7 +2,7 @@
 
 A powerful integration that monitors your Home Assistant logs and provides AI-powered explanations for errors and warnings.
 
-**Version:** 0.1.1-alpha (Alpha Release)
+**Version:** 0.2.0-alpha (Alpha Release)
 
 ## ✨ Key Features
 

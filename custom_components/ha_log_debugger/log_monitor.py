@@ -160,8 +160,12 @@ class LogMonitor:
         self._running = False
         _LOGGER.info("Log monitor stopped")
 
-    async def async_scan_logs(self) -> None:
-        """Scan log file for new entries."""
+    async def async_scan_logs(self, full_scan: bool = False) -> None:
+        """Scan log file for entries.
+        
+        Args:
+            full_scan: If True, scan entire log file. If False, only read new entries since last position.
+        """
         if not await self.hass.async_add_executor_job(self.log_file_path.exists):
             _LOGGER.warning("Log file not found: %s", self.log_file_path)
             return
@@ -176,25 +180,51 @@ class LogMonitor:
                 self.last_position = 0
                 _LOGGER.info("Log file rotated, resetting position")
             
-            # Read new lines using executor
-            new_lines = await self.hass.async_add_executor_job(
-                self._read_log_lines
-            )
+            # Read lines using executor
+            if full_scan:
+                _LOGGER.info("Performing full log scan")
+                new_lines = await self.hass.async_add_executor_job(
+                    self._read_full_log
+                )
+            else:
+                new_lines = await self.hass.async_add_executor_job(
+                    self._read_log_lines
+                )
             
             # Process new lines
             if new_lines:
+                _LOGGER.info("Processing %d log lines", len(new_lines))
                 await self._process_log_lines(new_lines)
+            else:
+                _LOGGER.debug("No new log entries to process")
                 
         except Exception as e:
             _LOGGER.error("Error scanning logs: %s", e, exc_info=True)
 
     def _read_log_lines(self) -> list[str]:
-        """Read new lines from log file (runs in executor)."""
+        """Read new lines from log file since last position (runs in executor)."""
         with open(self.log_file_path, "r", encoding="utf-8", errors="ignore") as f:
             f.seek(self.last_position)
             new_lines = f.readlines()
             self.last_position = f.tell()
         return new_lines
+
+    def _read_full_log(self) -> list[str]:
+        """Read entire log file (runs in executor).
+        
+        Reads the last 5000 lines or the entire file if smaller.
+        Updates last_position to end of file.
+        """
+        with open(self.log_file_path, "r", encoding="utf-8", errors="ignore") as f:
+            # Read all lines
+            all_lines = f.readlines()
+            # Take last 5000 lines to avoid overwhelming the system
+            lines_to_process = all_lines[-5000:] if len(all_lines) > 5000 else all_lines
+            # Update position to end of file
+            f.seek(0, 2)  # Seek to end
+            self.last_position = f.tell()
+        return lines_to_process
+
 
     async def _process_log_lines(self, lines: list[str]) -> None:
         """Process new log lines."""

@@ -53,7 +53,6 @@ class LogDebuggerBaseSensor(SensorEntity):
             "name": "Log Debugger",
             "manufacturer": "Home Assistant Community",
             "model": "Log Debugger",
-            "sw_version": "0.1.1-alpha",
         }
 
     async def async_added_to_hass(self) -> None:
