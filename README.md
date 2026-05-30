@@ -279,6 +279,6 @@ This integration analyzes log files to help with debugging. While it provides he
 
 ---
 
-**Version:** 0.1.1-alpha (Alpha Release)
+**Version:** 0.2.0-alpha (Alpha Release)
 
 **Made with ❤️ for the Home Assistant Community**

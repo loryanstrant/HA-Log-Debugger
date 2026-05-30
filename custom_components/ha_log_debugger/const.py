@@ -34,3 +34,6 @@ ATTR_SUGGESTED_FIX = "suggested_fix"
 SERVICE_ANALYZE_LOG = "analyze_log_entry"
 SERVICE_CLEAR_LOGS = "clear_analyzed_logs"
 SERVICE_SCAN_NOW = "scan_logs_now"
+
+# Log scanning limits
+MAX_LOG_LINES_FULL_SCAN = 5000

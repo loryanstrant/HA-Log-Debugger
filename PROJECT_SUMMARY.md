@@ -3,7 +3,7 @@
 ## 📋 Project Overview
 
 **Repository:** https://github.com/loryanstrant/HA-Log-Debugger  
-**Version:** 0.1.1-alpha  
+**Version:** 0.2.0-alpha  
 **Type:** Home Assistant Custom Integration (HACS-compatible)  
 **Author:** @loryanstrant
 
